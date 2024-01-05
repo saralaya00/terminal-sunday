@@ -36,8 +36,6 @@ weeks_passed=$(( (current_timestamp - birth_timestamp) / 604800 ))
 total_weeks=$((life_expectancy * 52))
 weeks_remaining=$((total_weeks - weeks_passed))
 
-echo -e "$name, only $weeks_remaining Sundays remain\n"
-
 rows=$((life_expectancy / columns))
 
 for (( row=0; row<rows; row++ )); do
@@ -59,14 +57,16 @@ for (( row=0; row<rows; row++ )); do
 done
 
 # print spaces before last year
+footer="Weeks to go $weeks_remaining"
+footer_len=${#footer}
+
 gaps=$((columns - 1))
 squares=$((columns * 2))
-indent=$((gaps + squares - 4))
+indent=$((gaps + squares - footer_len))
+
 for ((i=0; i<indent; i++)); do
     echo -n ' '
 done
 
 last_year=$((birth_year + last_year_index))
-echo $last_year
-
-echo -e "\nHow are you going to spend these Sundays, $name?"
+echo $footer
